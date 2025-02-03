@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 
 // ---------------------   GRUPOS -----------------------
 
-async function obtenerPlanta() {
+async function obtenerPlantas() {
     const plantas = await prisma.planta.findMany()
     return plantas
 }
@@ -20,7 +20,7 @@ async function obtenerPLanta(id) {
 
 // --------------------- PACIENTE -----------------------
 
-async function obtenerPaciente() {
+async function obtenerPacientes(){
     const pacientes = await prisma.paciente.findMany()
     return pacientes
 }
@@ -39,7 +39,7 @@ async function obtenerPaciente (id) {
 
 // ---------------------   MEDICINA -----------------------
 
-async function obtenerMedicina() {
+async function obtenerMedicinas() {
     const medicinas = await prisma.medicina.findMany()
     return medicinas
 }
@@ -54,10 +54,10 @@ async function obtenerMedicina(id) {
 
 
 export {
-    obtenerPlanta,
+    obtenerPlantas,
     obtenerPLanta,
+    obtenerPacientes,
     obtenerPaciente,
-    obtenerPaciente,
-    obtenerMedicina,
+    obtenerMedicinas,
     obtenerMedicina
 }
