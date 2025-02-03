@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Planta {
+  id        Int    @id @default(autoincrement())
+  nombre    String
+  jefePlanta String
+  pacientes Paciente[]
+
+  @@map("plantas") //mapear para que siempre coja el plural
+}
+
+model Paciente {
+  id               Int      @id @default(autoincrement())
+  nombre           String
+  fechaNacimiento  DateTime
+  planta           Planta   @relation(fields: [plantaId], references: [id])
+  plantaId         Int
+  medicinas        PacienteMedicina[]
+
+  @@map("pacientes")
+}
+
+model Medicina {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  via    String
+  pacientes PacienteMedicina[]
+
+  @@map("medicinas")
+}
+
+//esta es la tabla intermedia que se crea con N:M relaciones
+model PacienteMedicina {
+  paciente  Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId Int
+  medicina  Medicina @relation(fields: [medicinaId], references: [id])
+  medicinaId Int
+  @@id([pacienteId, medicinaId])
+
+  @@map("pacientesMedicinas")
+}
